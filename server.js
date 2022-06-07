@@ -47,9 +47,6 @@ app.post("/api/notes", (req, res) => {
   }
 });
 
-//SHould i close this function here? and make the others global??
-// Convert the data to a string so we can save it
-// const notesString = JSON.stringify(newNote);
 // Write the string to a file
 const readAndAppend = (content, file) => {
   fs.readFile(file, "utf8", (err, data) => {
