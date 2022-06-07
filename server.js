@@ -1,12 +1,11 @@
 const express = require("express");
 const path = require("path");
-const notes = require("./db/db.json");
 const fs = require("fs"); //need fs to readfile db.json
 
 const { v4: uuidv4 } = require("uuid");
 
 const app = express();
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 //middleware
 app.use(express.json());
@@ -14,15 +13,18 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 //linking to the index.html
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "/public/index.html"));
-});
+
 //linking to notes.html and displaying
 app.get("/notes", (req, res) => {
   res.sendFile(path.join(__dirname, "/public/notes.html"));
 });
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "/public/index.html"));
+});
 //connecting /notes to db.json
 //can not have 2 get routes with the very same path
+
 app.get("/api/notes", (req, res) => {
   fs.readFile("./db/db.json", "utf8", (err, data) => {
     if (err) {
