@@ -19,9 +19,6 @@ app.get("/notes", (req, res) => {
   res.sendFile(path.join(__dirname, "/public/notes.html"));
 });
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "/public/index.html"));
-});
 //connecting /notes to db.json
 //can not have 2 get routes with the very same path
 
@@ -72,16 +69,10 @@ const writeToFile = (destination, content) => {
     err ? console.error(err) : console.info(`\nData written to ${destination}`)
   );
 };
-// const response = {
-//   status: "success",
-//   body: newNote,
-// };
 
-// console.log(response);
-// res.status(201).json(response);
-//  else {
-//     res.status(500).json("Error in posting review")
-//   };
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "/public/index.html"));
+});
 
 //listen
 app.listen(PORT, () =>
