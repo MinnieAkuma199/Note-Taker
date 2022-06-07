@@ -12,16 +12,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-//linking to the index.html
-
 //linking to notes.html and displaying
 app.get("/notes", (req, res) => {
   res.sendFile(path.join(__dirname, "/public/notes.html"));
 });
 
 //connecting /notes to db.json
-//can not have 2 get routes with the very same path
-
+//can not have 2 get routes with the very same path so that why we use /api
 app.get("/api/notes", (req, res) => {
   fs.readFile("./db/db.json", "utf8", (err, data) => {
     if (err) {
@@ -35,7 +32,7 @@ app.get("/api/notes", (req, res) => {
 
 //need post so when user puts in note it goes to notes (db.json)
 app.post("/api/notes", (req, res) => {
-  console.log(req.body); //this helps find that title and text are keys already passed in from front end
+  console.log(req.body); //this helps find that title and text are keys already passed in from front end(index.js)
   const { title, text } = req.body;
   if (title && text) {
     req.body.id = uuidv4();
@@ -66,7 +63,7 @@ const writeToFile = (destination, content) => {
     err ? console.error(err) : console.info(`\nData written to ${destination}`)
   );
 };
-
+//linking to the index.html anything that is put into url after / that isnt notes
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "/public/index.html"));
 });
