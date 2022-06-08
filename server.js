@@ -1,7 +1,6 @@
 const express = require("express");
 const path = require("path");
 const fs = require("fs"); //need fs to readfile db.json
-
 const { v4: uuidv4 } = require("uuid");
 
 const app = express();
@@ -29,6 +28,7 @@ app.get("/api/notes", (req, res) => {
     }
   });
 });
+// app.get("/notes/id:", (req, res) => { dont know if i need a get request or not
 
 //need post so when user puts in note it goes to notes (db.json)
 app.post("/api/notes", (req, res) => {
@@ -42,6 +42,23 @@ app.post("/api/notes", (req, res) => {
   } else {
     res.status(400).send("Error in user request");
   }
+});
+
+//Delete request
+// Creating a DELETE request
+app.delete("/api/notes/:id", (req, res) => {
+  const id = req.params.id;
+  console.log("This is being deleted", id);
+  fs.readFile("./db/db.json", "utf8", (err, data) => {
+    if (err) {
+      console.error(err);
+    } else {
+      let currentNote = JSON.parse(data);
+      let deleteNote = currentNote.filter((note) => note.id != id);
+      writeToFile("./db/db.json", deleteNote);
+      res.status(200).json(deleteNote);
+    }
+  });
 });
 
 // Write the string to a file
