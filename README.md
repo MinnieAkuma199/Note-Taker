@@ -33,12 +33,11 @@ $ npm i
 
 [Link to deployed application on Heroku](https://kd-note-taker.herokuapp.com/)
 
-![alt text](public/assets/website.png)
+![alt text](public/assets/note-taker.gif)
 
 ### Contributors
 
 **https://github.com/minnieakuma199**
-
 
 ### Additional Questions
 
